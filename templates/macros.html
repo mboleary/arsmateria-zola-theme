@@ -175,3 +175,12 @@
     </div>
 </nav>
 {% endmacro %}
+
+<!-- Icon-left used for pages-->
+{% macro icon(icon) %}
+<svg class="feather">
+    <use 
+        href="/asset/feather-sprite.svg#{{ icon }}"
+    ></use>
+</svg>
+{% endmacro %}
