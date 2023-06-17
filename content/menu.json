@@ -1,0 +1,108 @@
+{
+    "topMenu": [
+        {
+            "name": "Home",
+            "url": "/",
+            "class":"accent-3",
+            "children": []
+        },
+        {
+            "name": "Blog",
+            "url": "/blog",
+            "class":"",
+            "children": []
+        },
+        {
+            "name": "Projects",
+            "url": "/projects",
+            "class":"",
+            "children": []
+        },
+        {
+            "name": "Music",
+            "url": "/music",
+            "class":"",
+            "children": []
+        },
+        {
+            "name": "Photography",
+            "url": "/pictures",
+            "class":"",
+            "children": []
+        },
+        {
+            "name": "About",
+            "url": "/about",
+            "class":"",
+            "children": []
+        }
+    ],
+    "footerMenu": [
+        {
+            "name": "About",
+            "url": "/about",
+            "class":"",
+            "children": [
+                {
+                    "name": "About Me",
+                    "url": "/about/aboutme",
+                    "children": []
+                },
+                {
+                    "name": "About Website",
+                    "url": "/about/aboutsite",
+                    "children": []
+                },
+                {
+                    "name": "Links",
+                    "url": "/about/links",
+                    "children": []
+                }
+            ]
+        },
+        {
+            "name": "Code",
+            "url": "/about/aboutcode",
+            "class":"",
+            "children": [
+                {
+                    "name": "Main Github",
+                    "url": "https://github.com/mboleary",
+                    "children": []
+                },
+                {
+                    "name": "Old Github",
+                    "url": "https://github.com/nesdood007",
+                    "children": []
+                },
+                {
+                    "name": "Gitlab",
+                    "url": "https://gitlab.com/mboleary",
+                    "children": []
+                }
+            ]
+        },
+        {
+            "name": "Tags",
+            "url": "/tags/",
+            "class":"",
+            "children": [
+                {
+                    "name": "Arduino",
+                    "url": "/tags/arduino",
+                    "children": []
+                },
+                {
+                    "name": "Unity",
+                    "url": "/tags/unity",
+                    "children": []
+                },
+                {
+                    "name": "JS",
+                    "url": "/tags/js",
+                    "children": []
+                }
+            ]
+        }
+    ]
+}

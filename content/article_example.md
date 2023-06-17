@@ -5,7 +5,6 @@ description = "Description"
 date=2023-06-09
 
 [taxonomies]
-categories=["projects", "libjame"]
 tags=["code", "js", "html", "audio", "music", "engine", "library", "opensource"]
 
 [extra]
