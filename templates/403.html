@@ -1,0 +1,6 @@
+{% extends "error.html" %}
+
+{% block error %}
+    {% set error_values = ["403", "Forbidden", "Access to this content is forbidden"] %}
+    {{ super() }}
+{% endblock error %}

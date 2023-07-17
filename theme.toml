@@ -21,3 +21,4 @@ default_description = "Default Description"
 [author]
 name = "Brady O'Leary"
 homepage = "https://deadcomputersociety.com"
+repo = "https://github.com/mboleary/arsmateria-zola-theme"

@@ -1,0 +1,6 @@
+{% extends "error.html" %}
+
+{% block error %}
+    {% set error_values = ["401", "Content Not Found"] %}
+    {{ super() }}
+{% endblock error %}

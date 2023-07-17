@@ -1,0 +1,26 @@
+{% extends "index.html" %}
+
+{% block content %}
+    {% set link_bases = ["https://http.cat/$CODE", "https://http.dog/$CODE.jpg"] %}
+    {% if not error_values %}
+        {% set error_values = ["000", "Test"] %}
+    {% endif %}
+    {% block error %}
+    <div class="title-banner bg-gradient-a1-a2">
+        <div class="container text-center fg-dark-color">
+            <h1>{{ error_values[1] }}</h1>
+            <hr>
+            <p>{{ error_values[0] }}</p>
+        </div>
+    </div>
+    <div class="container">
+        {% if error_values[2] %}
+            <p>{{ error_values[2] }}</p>
+        {% endif %}
+        {% for link_base in link_bases %}
+            {% set full_link = link_base | replace(from="$CODE", to=error_values[0]) %}
+            {{ macros::figure(src=full_link, caption=full_link) }}
+        {% endfor %}
+    </div>
+    {% endblock error %}
+{% endblock content %}
