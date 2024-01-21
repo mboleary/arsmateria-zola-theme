@@ -11,7 +11,13 @@
     {% set menuData = load_data(path="data/menu.json") %}
 {% endif %}
 
-{% set tagData = load_data(path="data/tags.json") %}
+{% if config.extra.tag_data_path %}
+    {% set tagData = load_data(path=config.extra.tag_data_path) %}
+{% elif config.extra.tag_data %}
+    {% set tagData = config.extra.tag_data %}
+{% else %}
+    {% set tagData = load_data(path="data/tags.json") %}
+{% endif %}
 
 <head>
     <title>{% block title %}{{config.title}}{% endblock title %}</title>
