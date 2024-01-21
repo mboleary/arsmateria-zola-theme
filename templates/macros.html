@@ -1,7 +1,6 @@
 <!-- Macros (Shortcodes for Templates) -->
 
 {% macro tag(tag) %}
-    {% set tagData = load_data(path="tags.json") %}
     {% if tagData[tag] %}
         {% set localTag = tagData[tag] %}
         <a href="/tags/{{tag}}">
@@ -16,7 +15,6 @@
 {% endmacro tag %}
 
 {% macro bigTag(tag) %}
-    {% set tagData = load_data(path="tags.json") %}
     {% if tagData[tag] %}
         {% set localTag = tagData[tag] %}
         <div class="chip-lg full-width text-center {% if localTag.class %}{{localTag.class}}{% endif %}" {% if localTag.fgColor or localTag.bgColor %}style="{% if localTag.fgColor %}color:{{localTag.fgColor}};{% endif %}{% if localTag.bgColor %}background-color:{{localTag.bgColor}};{% endif %}"{% endif %} {% if localTag.tooltip %}title="{{localTag.tooltip}}"{% endif %}>{% if localTag.pretext %}{{localTag.pretext}}{% endif %}{% if localTag.text %}{{localTag.text}}{% else %}{{tag}}{% endif %}{% if localTag.posttext %}{{localTag.posttext}}{% endif %}</div>
@@ -25,34 +23,6 @@
         <span class="chip-lg full-width text-center">{{tag}}</span>
     {% endif %}
 {% endmacro bigTag %}
-
-{% macro category(name) %}
-    <a href="/categories/{{name}}">{{name}}</a>
-{% endmacro %}
-
-{% macro categoryBlock(cat) %}
-    {% set catData = load_data(path="categories.json") %}
-    {% if catData[cat] %}
-        {% set localCat = catData[cat] %}
-        <a href="/categories/{{cat}}">
-            <div class="content-square fg-color flex-layout horizontal center {% if localCat.class %} {{localCat.class}}{% endif %}" {% if localCat.fgColor or localCat.bgColor %}style="{% if localCat.fgColor %}color:{{localCat.fgColor}};{% endif %}{% if localCat.bgColor %}background-color:{{localCat.bgColor}};{% endif %}"{% endif %}>
-                <div class="flex text-center">
-                    <h2>{% if localCat.title %}{{localCat.title}}{% else %}{{cat}}{% endif %}</h2>
-                    <p>{% if localCat.description %}{{localCat.description}}{% endif %}</p>
-                </div>
-            </div>
-        </a>
-    {% else %}
-        <!-- This cat isn't in category.json! -->
-        <a href="/categories/{{cat}}">
-            <div class="content-square fg-color flex-layout horizontal center">
-                <div class="flex text-center">
-                    <h2>{{cat}}</h2>
-                </div>
-            </div>
-        </a>
-    {% endif %}
-{% endmacro categoryBlock %}
 
 {% macro titlecard(title, subtitle, style=false, textStyle=false, img=false) %}
 <div class="title-banner {% if style %}{{ style }}{% endif %} {% if img %}img{% endif %}" {% if img %}style="background-image: url('{{img}}');"{% endif %}>

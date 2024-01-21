@@ -15,9 +15,17 @@ build_search_index = false
 taxonomies = [{name = "tags", rss = true}]
 
 title = "ArsMateria Zola Theme"
+
 [extra]
-# Put all your custom variables here
+# Global settings for the theme and SEO
 subtitle = "Subtitle"
-author = "Brady O'Leary"
-copyright_year = 2023
+author = "Author Name"
+copyright_year = "20XX"
 default_description = "A Zola Theme using arsMateria styling"
+keywords = ["keywords", "go", "here"]
+
+# Menu config
+menu_data_path="data/menu.json" # Load menu data from a path
+[extra.menu_data]
+
+# Tags config

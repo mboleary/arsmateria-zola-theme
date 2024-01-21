@@ -1,18 +1,18 @@
 {
-    "test": {
+    "space": {
         "tooltip": "This is a test Tag",
         "class": "",
         "bgColor": "black",
         "fgColor": "red"
     },
-    "blue": {
+    "coffee": {
         "tooltip": "This is a BLUE test Tag",
         "class": "",
         "bgColor": "blue",
         "fgColor": "white",
         "text":""
     },
-    "pizza": {
+    "technology": {
         "tooltip": "There WILL Be Pizza",
         "class": "",
         "bgColor": "red",
@@ -21,7 +21,11 @@
         "text": "ThereWillBePizza",
         "posttext": "🍕🍕🍕🍕🍕"
     },
-    "tag": {
+    "sustainability": {
         "tooltip": "Just a regular ole' tag."
+    },
+    "docs": {
+        "tooltip": "Documentation",
+        "bgColor": "accent-1"
     }
 }

@@ -2,9 +2,16 @@
 
 <!Doctype html>
 <html>
-{% set data = load_data(path="content/menu.json") %}
 
-{% set cow = load_data(path="data/cow", format="plain") %}
+{% if config.extra.menu_data_path %}
+    {% set menuData = load_data(path=config.extra.menu_data_path) %}
+{% elif config.extra.menu_data %}
+    {% set menuData = config.extra.menu_data %}
+{% else %}
+    {% set menuData = load_data(path="data/menu.json") %}
+{% endif %}
+
+{% set tagData = load_data(path="data/tags.json") %}
 
 <head>
     <title>{% block title %}{{config.title}}{% endblock title %}</title>
@@ -14,7 +21,7 @@
     <meta name="description" content="{% block description %}{{config.extra.default_description}}{% endblock description %}">
     <meta name="author" content="{% block author %}{{config.extra.author}}{% endblock author %}">
     <meta name="generator" content="Zola">
-    <meta name="keywords" content="{% block keywords %}keywords, go, here{% endblock keywords %}">
+    <meta name="keywords" content="{% block keywords %}{{config.extra.keywords | join(sep=",")}}{% endblock keywords %}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#00121a"> <!-- Colored Chrome Mobile Tabs! -->
     <link rel="icon" type="image/png" href="/favicon.png">
@@ -62,7 +69,7 @@
                         <div class="flex-layout horizontal wrap">
                             <div class="flex">
                                 <h1>
-                                    <a href="/" class="fg-color"><span class="accent-1">Dead</span><span class="accent-2">Computer</span><span class="accent-3">Society</span>.com</a>
+                                    <a href="/" class="fg-color">{{ config.title }}</a>
                                 </h1>
                             </div>
                         </div>
@@ -73,7 +80,7 @@
                     <div class="container">
                         {% block headerMenu %}
                             <ul class="flex menu-bar flex-layout responsive bp-0 wrap">
-                                {% for entry in data.topMenu %}
+                                {% for entry in menuData.topMenu %}
                                     <!-- @TODO Re-add support for dropdown menus -->
                                     <li class="flex menu-item {% if entry.children %}dropdown{% endif %} {% if entry.url != "/" and page and page.path is containing(entry.url) %}selected{% endif %} {% if entry.url != "/" and section and section.path is containing(entry.url) %}selected{% endif %}">
                                         <a href="{{entry.url}}">{{entry.name}}</a>
@@ -104,18 +111,17 @@
             {% endblock content %}
         </main>
         {% block footer %}
+        {% block footerFront %}
         <div class="container full-width">
             <hr>
             <button onclick="toggleDark()">Toggle Dark mode</button>
-            <div class="flex-layout horizontal center" data-nosnippet>
-                <code class="gay-text">{{cow | safe }}</code>
-            </div>
         </div>
+        {% endblock footerFront %}
         <div class="height-20"></div>
         <footer class="footer box-shadow">
             <div class="footer-top">
                 <div class="container flex-layout responsive bp-0 wrap">
-                    {% for entry in data.footerMenu %}
+                    {% for entry in menuData.footerMenu %}
                         <ul class="flex link-list">
                             <li class="title {{entry.class}}"><a href="{{entry.url}}">{{entry.name}}</a></li>
                             {% if entry.children %}

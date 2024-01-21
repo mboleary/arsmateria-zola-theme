@@ -7,32 +7,14 @@
             "children": []
         },
         {
-            "name": "Blog",
-            "url": "/blog",
+            "name": "Docs",
+            "url": "/docs",
             "class":"",
             "children": []
         },
         {
-            "name": "Projects",
-            "url": "/projects",
-            "class":"",
-            "children": []
-        },
-        {
-            "name": "Music",
-            "url": "/music",
-            "class":"",
-            "children": []
-        },
-        {
-            "name": "Photography",
-            "url": "/pictures",
-            "class":"",
-            "children": []
-        },
-        {
-            "name": "About",
-            "url": "/about",
+            "name": "Test Articles",
+            "url": "/gpt",
             "class":"",
             "children": []
         }
@@ -56,28 +38,6 @@
                 {
                     "name": "Links",
                     "url": "/about/links",
-                    "children": []
-                }
-            ]
-        },
-        {
-            "name": "Code",
-            "url": "/about/aboutcode",
-            "class":"",
-            "children": [
-                {
-                    "name": "Main Github",
-                    "url": "https://github.com/mboleary",
-                    "children": []
-                },
-                {
-                    "name": "Old Github",
-                    "url": "https://github.com/nesdood007",
-                    "children": []
-                },
-                {
-                    "name": "Gitlab",
-                    "url": "https://gitlab.com/mboleary",
                     "children": []
                 }
             ]
