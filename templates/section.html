@@ -52,12 +52,6 @@
                         <div>
                             <span class="info">
                                 {% if page.date %}{{page.date}} | {% endif %}
-                                {% if page.taxonomies and page.taxonomies.categories %}
-                                    Filed under
-                                    {% for cat in page.taxonomies.categories %}
-                                        {{ macros::category(name=cat)}}
-                                    {% endfor %} |
-                                {% endif %}
                             </span>
                             {% if page.taxonomies.tags %}
                                 {% for tag in page.taxonomies.tags %}
@@ -82,31 +76,23 @@
                 </article>
             </div>
         {% elif section.extra.type == "flashcard" %}
-            {% if page.extra %}
-                {% set titlecardStyle = false %}
-                {% set titlecardTextStyle = false %}
-                {% set titlecardImg = false %}
-                {% set titlecardBannerCats = false %}
-                {% set titlecardBannerTags = false %}
-                {% if page.extra.titlecard %}
-                    {% set titlecardStyle = page.extra.titlecard %}
-                {% endif %}
-                {% if page.extra.titlecard_text %}
-                    {% set titlecardTextStyle = page.extra.titlecard_text %}
-                {% endif %}
-                {% if page.extra.img %}
-                    {% set titlecardImg = page.extra.img %}
-                {% endif %}
-                {% if page.taxonomies.categories %}
-                    {% set titlecardBannerCats = page.taxonomies.categories %}
-                {% endif %}
-                {% if page.taxonomies.tags %}
-                    {% set titlecardBannerTags = page.taxonomies.tags %}
-                {% endif %}
-                {{ macros::flashcard_with_banner(title=page.title, subtitle=page.description, style=titlecardStyle, textStyle=titlecardTextStyle, img=titlecardImg, readMore=page.path, cats=titlecardBannerCats, tags=titlecardBannerTags) }}
-            {% else %}
-                {{ macros::flashcard(title=page.title, subtitle=page.description, readMore=page.path) }}
+            {% set titlecardStyle = false %}
+            {% set titlecardTextStyle = false %}
+            {% set titlecardImg = false %}
+            {% set titlecardBannerTags = false %}
+            {% if page.extra.titlecard %}
+                {% set titlecardStyle = page.extra.titlecard %}
             {% endif %}
+            {% if page.extra.titlecard_text %}
+                {% set titlecardTextStyle = page.extra.titlecard_text %}
+            {% endif %}
+            {% if page.extra.img %}
+                {% set titlecardImg = page.extra.img %}
+            {% endif %}
+            {% if page.taxonomies.tags %}
+                {% set titlecardBannerTags = page.taxonomies.tags %}
+            {% endif %}
+            {{ macros::flashcard(title=page.title, subtitle=page.description, style=titlecardStyle, textStyle=titlecardTextStyle, img=titlecardImg, readMore=page.path, left=page.date, tags=titlecardBannerTags) }}
         {% endif %}
     {% endfor %}
     

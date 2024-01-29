@@ -1,6 +1,26 @@
 <!-- Macros (Shortcodes for Templates) -->
 
+
+
+{% macro importTagData() %}
+{% if config.extra.tag_data_path %}
+    {% set tagData = load_data(path=config.extra.tag_data_path) %}
+{% elif config.extra.tag_data %}
+    {% set tagData = config.extra.tag_data %}
+{% else %}
+    {% set tagData = load_data(path="data/tags.json") %}
+{% endif %}
+{{ tagData | json_encode(pretty=true) | safe }}
+{% endmacro %}
+
 {% macro tag(tag) %}
+    {% if config.extra.tag_data_path %}
+        {% set tagData = load_data(path=config.extra.tag_data_path) %}
+    {% elif config.extra.tag_data %}
+        {% set tagData = config.extra.tag_data %}
+    {% else %}
+        {% set tagData = load_data(path="data/tags.json") %}
+    {% endif %}
     {% if tagData[tag] %}
         {% set localTag = tagData[tag] %}
         <a href="/tags/{{tag}}">
@@ -15,6 +35,13 @@
 {% endmacro tag %}
 
 {% macro bigTag(tag) %}
+    {% if config.extra.tag_data_path %}
+        {% set tagData = load_data(path=config.extra.tag_data_path) %}
+    {% elif config.extra.tag_data %}
+        {% set tagData = config.extra.tag_data %}
+    {% else %}
+        {% set tagData = load_data(path="data/tags.json") %}
+    {% endif %}
     {% if tagData[tag] %}
         {% set localTag = tagData[tag] %}
         <div class="chip-lg full-width text-center {% if localTag.class %}{{localTag.class}}{% endif %}" {% if localTag.fgColor or localTag.bgColor %}style="{% if localTag.fgColor %}color:{{localTag.fgColor}};{% endif %}{% if localTag.bgColor %}background-color:{{localTag.bgColor}};{% endif %}"{% endif %} {% if localTag.tooltip %}title="{{localTag.tooltip}}"{% endif %}>{% if localTag.pretext %}{{localTag.pretext}}{% endif %}{% if localTag.text %}{{localTag.text}}{% else %}{{tag}}{% endif %}{% if localTag.posttext %}{{localTag.posttext}}{% endif %}</div>
@@ -36,24 +63,10 @@
 </div>
 {% endmacro %}
 
-{% macro flashcard(title, subtitle, style=false, textStyle=false, img=false, readMore=false) %}
-<div class="banner {% if style %}{{ style }}{% endif %} {% if img %}img{% endif %}" {% if img %}style="background-image: url('{{img}}');"{% endif %}>
-    <div class="container text-center {% if textStyle %}{{ textStyle }}{% endif %}">
-        <h1> {{ title }}</h1>
-        {% if subtitle %}
-        <hr>
-        <p> {{ subtitle }} </p>
-        {% endif %}
-        {% if readMore %}
-            <a href="{{ readMore }}">Read More →</a>
-        {% endif %}
-    </div>
-</div>
-{% endmacro %}
-
 <!-- This is for use in Sections -->
-{% macro flashcard_with_banner(title, subtitle, style=false, textStyle=false, img=false, readMore=false, cats=false, tags=false, ctr=false) %}
-<div class="banner {% if style %}{{ style }}{% endif %} {% if img %}img{% endif %} banner-footer-wrapper" {% if img %}style="background-image: url('{{img}}');"{% endif %}>
+{% macro flashcard(title, subtitle, style=false, textStyle=false, img=false, readMore=false, left=false, tags=false, ctr=false) %}
+{% set showBannerFooter = left or ctr or tags %}
+<div class="banner {% if style %}{{ style }}{% endif %} {% if img %}img{% endif %} {% if showBannerFooter %} banner-footer-wrapper{% endif %}" {% if img %}style="background-image: url('{{img}}');"{% endif %}>
     <div class="container text-center {% if textStyle %}{{ textStyle }}{% endif %}">
         <h1> {{ title }}</h1>
         {% if subtitle %}
@@ -65,16 +78,12 @@
             <a href="{{ readMore }}" class="button">Read More 🢂</a>
         </div>
         {% endif %}
-        
     </div>
+    {% if showBannerFooter %}
     <div class="banner-footer bg-darken bg-blur fg-dark-color">
         <div class="container flex-layout horizontal full-height">
             <div class="flex margin-top-bottom-auto text-shadow-dark">
-                 {% if cats %} Filed under
-                    {% for cat in cats %}
-                        {{ macros::category(name=cat)}}
-                    {% endfor %}
-                {% endif %}
+                 {% if left %} {{ left }} {% endif %}
             </div>
             <div class="flex margin-top-bottom-auto">
                 {% if ctr %}
@@ -91,6 +100,7 @@
             
         </div>
     </div>
+    {% endif %}
 </div>
 {% endmacro %}
 
@@ -147,10 +157,14 @@
 {% endmacro %}
 
 <!-- Icon-left used for pages-->
-{% macro icon(icon) %}
-<svg class="feather">
+{% macro icon(icon, color="currentColor",size="24px") %}
+<svg class="feather" style="{% if size != "24px" %} width: {{size}}; height: {{size}}{% endif %}">
     <use 
         href="/asset/feather-sprite.svg#{{ icon }}"
+        stroke="{{color}}"
+        stroke-width="2"
+        width="{{size}}"
+        height="{{size}}"
     ></use>
 </svg>
 {% endmacro %}
@@ -163,4 +177,19 @@
     </a>
     <figcaption> {% if num %}<span class="figure">{{num}}</span>{% endif %} {{caption}} </figcaption>
 </figure>
+{% endmacro %}
+
+{% macro text_section(title, content, type="", class="") %}
+{% if type == "warn" %} 
+    {% set icon = "alert-triangle" %}
+    {% set typeClass = type %}
+{% elif type == "error" %}
+    {% set icon = "alert-octagon" %}
+    {% set typeClass = type %}
+{% endif %}
+
+<div class="text-section {% if typeClass %} {{ typeClass }} {% endif %} {{class}}">
+    <h1>{% if icon %}{{macros::icon(icon=icon, size="2rem")}} {% endif %} {{title}}</h1>
+    <p>{{content}}</p>
+</div>
 {% endmacro %}
