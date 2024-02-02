@@ -1,18 +1,5 @@
 <!-- Macros (Shortcodes for Templates) -->
 
-
-
-{% macro importTagData() %}
-{% if config.extra.tag_data_path %}
-    {% set tagData = load_data(path=config.extra.tag_data_path) %}
-{% elif config.extra.tag_data %}
-    {% set tagData = config.extra.tag_data %}
-{% else %}
-    {% set tagData = load_data(path="data/tags.json") %}
-{% endif %}
-{{ tagData | json_encode(pretty=true) | safe }}
-{% endmacro %}
-
 {% macro tag(tag) %}
     {% if config.extra.tag_data_path %}
         {% set tagData = load_data(path=config.extra.tag_data_path) %}
@@ -52,7 +39,7 @@
 {% endmacro bigTag %}
 
 {% macro titlecard(title, subtitle, style=false, textStyle=false, img=false) %}
-<div class="title-banner {% if style %}{{ style }}{% endif %} {% if img %}img{% endif %}" {% if img %}style="background-image: url('{{img}}');"{% endif %}>
+<div class="title-banner {% if style %}{{ style }}{% else %}bg-gradient-gray{% endif %} {% if img %}img{% endif %}" {% if img %}style="background-image: url('{{img}}');"{% endif %}>
     <div class="container text-center {% if textStyle %}{{ textStyle }}{% endif %}">
         <h1> {{ title }}</h1>
         {% if subtitle %}
@@ -66,7 +53,7 @@
 <!-- This is for use in Sections -->
 {% macro flashcard(title, subtitle, style=false, textStyle=false, img=false, readMore=false, left=false, tags=false, ctr=false) %}
 {% set showBannerFooter = left or ctr or tags %}
-<div class="banner {% if style %}{{ style }}{% endif %} {% if img %}img{% endif %} {% if showBannerFooter %} banner-footer-wrapper{% endif %}" {% if img %}style="background-image: url('{{img}}');"{% endif %}>
+<div class="banner {% if style %}{{ style }}{% else %}bg-gradient-gray{% endif %} {% if img %}img{% endif %} {% if showBannerFooter %} banner-footer-wrapper{% endif %}" {% if img %}style="background-image: url('{{img}}');"{% endif %}>
     <div class="container text-center {% if textStyle %}{{ textStyle }}{% endif %}">
         <h1> {{ title }}</h1>
         {% if subtitle %}

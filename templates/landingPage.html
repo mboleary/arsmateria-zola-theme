@@ -1,28 +1,101 @@
 {% extends "index.html" %}
 
-{% block body %}
+{% block header %}
+<div>
+    <div class="landing-fixed full-height full-width {% if section.extra and section.extra.landing_bg_class %}{{section.extra.landing_bg_class}}{% else %}bg-gradient-gray{% endif %}">
+        {% block landingBackground %}
+        {% endblock landingBackground %}
+    </div>
+    <header class="banner-short">
+        <div class="full-width bg-darken bg-blur fg-dark-color text-shadow-dark">
+            <div class="container">
+                {% block headerTitleLanding %}
+                <div class="flex-layout horizontal wrap">
+                    <div class="flex">
+                        <h1>
+                            {{ config.title }}
+                        </h1>
+                        <p>{{ config.extra.subtitle }}</p>
+                    </div>
+                </div>
+                {% endblock headerTitleLanding %}
 
-<div class="banner">
-    <div class="container full-width">
-        {% block headerTitleLanding %}
-        <div class="flex-layout horizontal wrap">
-            <div class="flex">
-                <h1>
-                    {{ config.title }}
-                </h1>
-                <p>{{ config.extra.subtitle }}</p>
+                <ul class="menu-bar flex-layout responsive bp-0 wrap no-bg-color">
+                    {% for entry in menuData.topMenu %}
+                        {% set childLen = entry.children | length %}
+                        <li class="flex menu-item {% if entry.class %}{{entry.class}}{% endif %} {% if entry.url == '/' and section and section.path == entry.url %}selected{% endif %}">
+                            <a href="{{ entry.url }}">{{ entry.name }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
             </div>
         </div>
-        {% endblock headerTitleLanding %}
-
-        <ul class="menu-bar flex-layout responsive bp-0 wrap">
-            {% for entry in menuData.topMenu %}
-                {% set childLen = entry.children | length %}
-                <li class="flex menu-item {% if entry.class %}{{entry.class}}{% endif %} {% if entry.url == "/" and section and section.path == entry.url %}selected{% endif %}">
-                    <a href="{{ entry.url }}">{{ entry.name }}</a>
-                </li>
-            {% endfor %}
-        </ul>
     </div>
 </div>
-{% endblock body %}
+{% endblock header %}
+
+{% block content %}
+{% set cards = [] %}
+{% for subsection in section.subsections %}
+    {% set subsection_data = get_section(path=subsection) %}
+    {% set_global cards = cards | concat(with=subsection_data.pages) %}
+{% endfor %}
+<div class="container">
+    <div class="text-section">
+        <h1>Recent Activity</h1>
+        {% set num = cards | length %}
+        <p>There {{ num | pluralize(singular="is", plural="are") }} {{num}} card{{ num | pluralize() }} below</p>
+    </div>
+</div>
+<div class="grid-layout grid-gap">
+    {# <!-- @TODO sort --> #}
+    {% for card in cards %}
+        {% set type = ["dark", "light"] | nth(n=get_random(end=2)) %}
+        {% if card.extra and card.extra.card %}
+            {% set image = false %}
+            {% set title_class = "" %}
+            {% set rowspan = 1 %}
+            {% set colspan = 1 %}
+
+            {% if card.extra.card.image %}
+                {% set image = card.extra.card.image %}
+            {% endif %}
+            {% if card.extra.card.title_class %}
+                {% set title_class = card.extra.card.title_class %}
+            {% endif %}
+            {% if card.extra.card.type %}
+                {% set type = card.extra.card.type %}
+            {% endif %}
+            {% if card.extra.card.rowspan %}
+                {% set rowspan = card.extra.card.rowspan %}
+            {% endif %}
+            {% if card.extra.card.colspan %}
+                {% set colspan = card.extra.card.colspan %}
+            {% endif %}
+
+            {{ cards::translucent_content_card(
+                title=card.title,
+                content=card.description,
+                href=card.permalink | safe,
+                image=image,
+                title_class=title_class,
+                type=type,
+                rowspan=rowspan,
+                colspan=colspan
+            ) }}
+        {% else %}
+            {{ cards::translucent_content_card(
+                title=card.title,
+                content=card.description,
+                href=card.permalink | safe,
+                type=type
+            ) }}
+        {% endif %}
+    {% endfor %}
+</div>
+{% endblock content %}
+{% block footerFront %}
+<div class="height-20"></div>
+{% endblock footerFront %}
+
+
