@@ -40,13 +40,6 @@
     {% set subsection_data = get_section(path=subsection) %}
     {% set_global cards = cards | concat(with=subsection_data.pages) %}
 {% endfor %}
-<div class="container">
-    <div class="text-section">
-        <h1>Recent Activity</h1>
-        {% set num = cards | length %}
-        <p>There {{ num | pluralize(singular="is", plural="are") }} {{num}} card{{ num | pluralize() }} below</p>
-    </div>
-</div>
 <div class="grid-layout grid-gap">
     {# <!-- @TODO sort --> #}
     {% for card in cards %}

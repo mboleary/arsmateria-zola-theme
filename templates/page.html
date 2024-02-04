@@ -74,6 +74,12 @@
             <b class="margin-top-bottom-auto">Source code can be found at <a href="{{page.extra.git_link}}">{{page.extra.git_link}}</a></b>
         </div>
         {% endif %}
+        {% if page.extra and page.extra.music_link %}
+        <div class="margin-top-bottom-2x flex-layout horizontal wrap">
+            <div class="icon left">{{ macros::icon(icon="headphones") }}</svg></div>
+            <b class="margin-top-bottom-auto">Have a listen at <a href="{{page.extra.music_link}}">{{page.extra.music_link}}</a></b>
+        </div>
+        {% endif %}
     {% endif %}
     
 {{ page.content | safe }}
