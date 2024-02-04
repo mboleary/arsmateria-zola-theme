@@ -1,5 +1,7 @@
 {% extends "error.html" %}
 
+{% block title %}HTTP Error 400{% endblock title %}
+
 {% block error %}
     {% set error_values = ["400", "Bad Request"] %}
     {{ super() }}

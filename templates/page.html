@@ -1,11 +1,11 @@
 {% extends "index.html" %}
 
 {% block description %}
-{% if page.description_long %}
+{%- if page.description_long -%}
     {{ page.description_long }}
-{% else %}
+{%- else -%}
     {{ page.description }}
-{% endif %}
+{%- endif -%}
 {% endblock %}
 
 {% block keywords %}{% if page.taxonomies.tags %}{{ page.taxonomies.tags | join(sep=", ") }}{% endif %}{% endblock keywords %}
@@ -21,8 +21,8 @@
     {% if page.extra.titlecard_text %}
         {% set titlecardTextStyle = page.extra.titlecard_text %}
     {% endif %}
-    {% if page.extra.img %}
-        {% set titlecardImg = page.extra.img %}
+    {% if page.extra.titlecard_image %}
+        {% set titlecardImg = page.extra.titlecard_image %}
     {% endif %}
     {{ macros::titlecard(title=page.title, subtitle=page.description, style=titlecardStyle, textStyle=titlecardTextStyle, img=titlecardImg) }}
 {% else %}
@@ -38,6 +38,12 @@
 {% endif %}
 
 <div class="container">
+    {% if page.draft %}
+    <div class="margin-top-bottom-2x flex-layout horizontal wrap warn-color-fg">
+        <div class="icon left">{{ macros::icon(icon="alert-triangle") }}</svg></div>
+        <b class="margin-top-bottom-auto">This article is a draft</b>
+    </div>
+    {% endif %}
     {% if not page.extra.hide_icons %}
         {% if page.date %}
         <div class="margin-top-bottom-2x flex-layout horizontal wrap">
@@ -51,14 +57,21 @@
         </div>
         <div class="margin-top-bottom-2x flex-layout horizontal wrap">
             <div class="icon left">{{ macros::icon(icon="user") }}</svg></div>
-            <b class="margin-top-bottom-auto">Author: {% if page.extra.author %}{{page.extra.author}}{% else %}{{config.extra.author}}{% endif %}</b>
+            <b class="margin-top-bottom-auto">Author: {% if page.author %}{{page.author}}{% else %}{{config.author}}{% endif %}</b>
         </div>
         {% if page.taxonomies.tags %}
         <div class="margin-top-bottom-2x flex-layout horizontal wrap">
             <div class="icon left">{{ macros::icon(icon="tag") }}</svg></div>
             {% for tag in page.taxonomies.tags %}
-                {{macros::tag(tag=tag)}}
+                {{tags::tag(tag=tag)}}
             {% endfor %}
+        </div>
+        {% endif %}
+        {# <!-- @TODO add other taxonomies --> #}
+        {% if page.extra and page.extra.git_link %}
+        <div class="margin-top-bottom-2x flex-layout horizontal wrap">
+            <div class="icon left">{{ macros::icon(icon="git-branch") }}</svg></div>
+            <b class="margin-top-bottom-auto">Source code can be found at <a href="{{page.extra.git_link}}">{{page.extra.git_link}}</a></b>
         </div>
         {% endif %}
     {% endif %}

@@ -1,5 +1,8 @@
 {% extends "index.html" %}
 
+{% block title %}List of taxonomy {{ taxonomy.name | capitalize }}{% endblock title %}
+{% block description %}A list of all known taxonomy terms{% endblock description %}
+
 {% block content %}
 
 <div class="title-banner">
@@ -11,7 +14,7 @@
 <div class="container">
     {% for tax in terms %}
         <a href="{{tax.path}}">
-            <div class="flex-layout horizontal fg-color">{{macros::bigTag(tag=tax.name)}}</div>
+            <div class="flex-layout horizontal fg-color">{{tags::bigTag(tag=tax.name)}}</div>
         </a>
     {% endfor %}
 </div>

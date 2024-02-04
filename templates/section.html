@@ -1,13 +1,5 @@
 {% extends "index.html" %}
 
-{% block title %}
-{{ section.title }}
-{% endblock %}
-
-{% block description %}
-{{ section.description }}
-{% endblock %}
-
 {% block content %}
 
 {% if section.extra %}
@@ -20,8 +12,8 @@
     {% if section.extra.titlecard_text %}
         {% set titlecardTextStyle = section.extra.titlecard_text %}
     {% endif %}
-    {% if section.extra.img %}
-        {% set titlecardImg = section.extra.img %}
+    {% if section.extra.titlecard_image %}
+        {% set titlecardImg = section.extra.titlecard_image %}
     {% endif %}
     {{ macros::titlecard(title=section.title, subtitle=section.description, style=titlecardStyle, textStyle=titlecardTextStyle, img=titlecardImg) }}
 {% else %}
@@ -55,7 +47,7 @@
                             </span>
                             {% if page.taxonomies.tags %}
                                 {% for tag in page.taxonomies.tags %}
-                                    {{macros::tag(tag=tag)}}
+                                    {{tags::tag(tag=tag)}}
                                 {% endfor %}
                             {% endif %}
                         </div>
@@ -86,8 +78,8 @@
             {% if page.extra.titlecard_text %}
                 {% set titlecardTextStyle = page.extra.titlecard_text %}
             {% endif %}
-            {% if page.extra.img %}
-                {% set titlecardImg = page.extra.img %}
+            {% if page.extra.titlecard_image %}
+                {% set titlecardImg = page.extra.titlecard_image %}
             {% endif %}
             {% if page.taxonomies.tags %}
                 {% set titlecardBannerTags = page.taxonomies.tags %}

@@ -33,6 +33,42 @@
 </div>
 {% endmacro %}
 
+{% macro content_card(
+  title,
+  content,
+  image=false,
+  title_class="accent-1",
+  card_class="",
+  href=false,
+  rowspan=1,
+  colspan=1,
+  set_width=true
+) %}
+<div class="content-card {% if set_width %}set-width{% endif %} {% if image %}set-min-width no-padding{% endif %} {% if rowspan > 1 %}grid-rowspan-{{rowspan}}{% endif %} {% if colspan > 1 %}grid-colspan-{{colspan}}{% endif %} {{card_class}}">
+  {% if href %}
+    <a href="{{href}}">
+      <div class="full-height {% if type == 'dark' %}fg-dark-color {% elif type == 'light' %}fg-light-color {% endif %}">
+        {{ cards::_content(
+          title=title,
+          content=content,
+          image=image,
+          title_class=title_class,
+          href=href 
+        ) }}
+      </div>
+    </a>
+  {% else %}
+    {{ cards::_content(
+      title=title,
+      content=content,
+      image=image,
+      title_class=title_class,
+      href=href 
+    ) }}
+  {% endif %}
+</div>
+{% endmacro %}
+
 {% macro _content(
   title,
   content,

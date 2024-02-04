@@ -18,7 +18,7 @@ This template provides many points in which to override content using [blocks](h
 ## index.html template blocks
 - `title`: Title of the page, defaults to `{{config.title}}`
 - `description`: Description metadata, useful for SEO, defaults to `{{config.extra.default_description}}`
-- `author`: Author of the page, defaults to `{{config.extra.author}}`
+- `author`: Author of the page, defaults to `{{config.author}}`
 - `keywords`: Website keywords, useful for SEO, defaults to `{{config.extra.keywords}}` which should be an array of strings
 - `head`: Additional tags to be added to the head
 - `body`: Override the entire html body
