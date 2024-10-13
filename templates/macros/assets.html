@@ -1,0 +1,13 @@
+{% macro image(src, alt) %}
+  {% set image = resize_image(path=src, width=240, height=180) %}
+  <a href="{{ get_url(path=src) }}" target="_blank">
+      <img src="{{ image.url }}" alt="{{ alt }}" />
+  </a>
+{% endmacro %}
+
+{% macro figure_image(src, caption, num=false) %}
+<figure>
+  {{ assets::image(src=src, alt=caption) }}
+  <figcaption> {% if num %}<span class="figure">{{num}}</span>{% endif %} {{caption}} </figcaption>
+</figure>
+{% endmacro %}
