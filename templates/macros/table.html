@@ -1,2 +1,44 @@
 <!-- Data Table Macros -->
 
+{% macro dataTable(rows, cols, caption=false, linkField=false, headerRowClass=false, footerCols=false) %}
+<table>
+  {% if caption %}<caption>{{ caption }}</caption>{% endif %}
+  <thead {% if headerRowClass %}class="{{ headerRowClass }}"{% endif %}>
+    <tr>
+      {% for col in cols %}
+      <th {% if col.class %}class="{{col.class}}"{% endif %}>{{ col.name }}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in rows %}
+    <tr>
+      {% if row is object %}
+        {% for col in cols %}
+        <td {% if col.dataClassField and row[col.dataClassField] %}class="{{row[col.dataClassField]}}"{% endif %}>
+          {% if linkField and row[linkField] %}
+            <a href="{{row[linkField]}}" class="fg-color">{{ row[col.field] }}</a>
+          {% else %}
+            {{ row[col.field] }}
+          {% endif %}
+        </td>
+        {% endfor %}
+      {% else %}
+        {% for col in row %}
+        <td>{{col}}</td>
+        {% endfor %}
+      {% endif %}
+    </tr>
+    {% endfor %}
+  </tbody>
+  {% if footerCols %}
+    <tfoot>
+      <tr>
+      {% for footerCol in footerCols %}
+        <td>{{ footerCol }}</td>
+      {% endfor %}
+      </tr>
+    </tfoot>
+  {% endif %}
+</table>
+{% endmacro dataTable %}

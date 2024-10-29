@@ -26,7 +26,7 @@ copyright_year = "20XX"
 keywords = ["keywords", "go", "here"]
 
 # Menu config
-# menu_data_path="data/menu.json" # Load menu data from a path
-[extra.menu_data]
+menu_data_path="data/menu.json" # Load menu data from a path
+# [extra.menu_data]
 
 # Tags config

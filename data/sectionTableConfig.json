@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Title",
+    "field": "title"
+  },
+  {
+    "name": "Date",
+    "field": "date"
+  },
+  {
+    "name": "Description",
+    "field": "description"
+  }
+]

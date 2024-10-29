@@ -1,6 +1,7 @@
 +++
 title = "Section"
 description = "Description"
+template="sectionList.html"
 
 [extra]
 titlecard = "bg-gradient-a3-a4"

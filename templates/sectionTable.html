@@ -1,0 +1,10 @@
+{% extends "section.html" %}
+
+{% block sectionPages %}
+{% set cols = load_data(path="../data/sectionTableConfig.json") %}
+{% if section.pages %}
+<div class="container">
+    {{ table::dataTable(rows=section.pages, cols=cols, linkField="path", headerRowClass="bg-gradient-a1-a2") }}
+</div>
+{% endif %}
+{% endblock sectionPages %}
