@@ -12,14 +12,15 @@
                 {% block headerTitleLanding %}
                 <div class="flex-layout horizontal wrap">
                     <div class="flex">
-                        <h1>
-                            {{ config.title }}
-                        </h1>
+                        <h1>{{ config.title }}</h1>
+                        {% if page.extra.subtitle %}
                         <p>{{ config.extra.subtitle }}</p>
+                        {% endif %}
                     </div>
                 </div>
                 {% endblock headerTitleLanding %}
 
+                {% if menuData and menuData.topMenu %}
                 <ul class="menu-bar flex-layout responsive bp-0 wrap no-bg-color">
                     {% for entry in menuData.topMenu %}
                         {% set childLen = entry.children | length %}
@@ -28,6 +29,7 @@
                         </li>
                     {% endfor %}
                 </ul>
+                {% endif %}
             </div>
         </div>
     </div>

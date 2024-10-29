@@ -1,0 +1,25 @@
+{% extends "section.html" %}
+
+{% block sectionPages %}
+{% if section.pages %}
+    {% for page in section.pages %}
+        {% set titlecardStyle = false %}
+        {% set titlecardTextStyle = false %}
+        {% set titlecardImg = false %}
+        {% set titlecardBannerTags = false %}
+        {% if page.extra.titlecard %}
+            {% set titlecardStyle = page.extra.titlecard %}
+        {% endif %}
+        {% if page.extra.titlecard_text %}
+            {% set titlecardTextStyle = page.extra.titlecard_text %}
+        {% endif %}
+        {% if page.extra.titlecard_image %}
+            {% set titlecardImg = page.extra.titlecard_image %}
+        {% endif %}
+        {% if page.taxonomies.tags %}
+            {% set titlecardBannerTags = page.taxonomies.tags %}
+        {% endif %}
+        {{ macros::flashcard(title=page.title, subtitle=page.description, style=titlecardStyle, textStyle=titlecardTextStyle, img=titlecardImg, readMore=page.path, left=page.date, tags=titlecardBannerTags) }}
+    {% endfor %}
+{% endif %}
+{% endblock sectionPages %}

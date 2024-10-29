@@ -1,14 +1,9 @@
 {% extends "index.html" %}
 
-{% block description %}
-{%- if page.description_long -%}
-    {{ page.description_long }}
-{%- else -%}
-    {{ page.description }}
-{%- endif -%}
-{% endblock %}
-
-{% block keywords %}{% if page.taxonomies.tags %}{{ page.taxonomies.tags | join(sep=", ") }}{% endif %}{% endblock keywords %}
+{% block title %}{{ page.title }}{% endblock title %}
+{% block description %}{{ page.description }}{% endblock %}
+{% if page.authors %}{% block author %}{{ page.authors | first }}{% endblock author %}{% endif %}
+{% if page.taxonomies.tags %}{% block keywords %}{{ page.taxonomies.tags | join(sep=", ") }}{% endblock keywords %}{% endif %}
 
 {% block content %}
 {% if page.extra %}
@@ -57,7 +52,7 @@
         </div>
         <div class="margin-top-bottom-2x flex-layout horizontal wrap">
             <div class="icon left">{{ macros::icon(icon="user") }}</svg></div>
-            <b class="margin-top-bottom-auto">Author: {% if page.author %}{{page.author}}{% else %}{{config.author}}{% endif %}</b>
+            <b class="margin-top-bottom-auto">Author: {% if page.authors %}{{ page.authors | join(sep=",") }}{% else %}{{config.author}}{% endif %}</b>
         </div>
         {% if page.taxonomies.tags %}
         <div class="margin-top-bottom-2x flex-layout horizontal wrap">

@@ -1,0 +1,24 @@
+<!-- Macros related to menus -->
+
+{% macro menuBar(items, path=false, main=false, menuClass=false ) %}
+<ul class="menu-bar no-bg-color flex-layout responsive bp-0 wrap {% if menuClass %}{{ menuClass }}{% endif %}">
+  {% if main %}
+  <li class="flex menu-item title {% if path == '/' %}selected{% endif %}">
+      <a href="/" class="fg-color">{{ main }}</a>
+  </li>
+  {% endif %}
+  {% for entry in items %}
+      <!-- @TODO Re-add support for dropdown menus -->
+      <li class="menu-item {% if entry.children %}dropdown{% endif %} {% if entry.url != '/' and path is starting_with(entry.url) %}selected{% endif %}">
+          <a href="{{entry.url}}">{{entry.name}}</a>
+          {% if entry.children %}
+              <div class="dropdownContent">
+                  {% for subentry in entry.children %}
+                      <a href="{{subentry.url}}">{{subentry.name}}</a>
+                  {% endfor %}
+              </div>
+          {% endif %}
+      </li>
+  {% endfor %}
+</ul>
+{% endmacro menu %}

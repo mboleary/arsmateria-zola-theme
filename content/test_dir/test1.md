@@ -1,6 +1,7 @@
 +++
 title = "Article"
 description = "Description"
+authors=["brady", "test"]
 
 date=2023-07-01
 +++

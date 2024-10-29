@@ -1,7 +1,8 @@
-{% import "macros/macros.html" as macros %}
-{% import "macros/cards.html" as cards %}
-{% import "macros/tags.html" as tags %}
 {% import "macros/assets.html" as assets %}
+{% import "macros/cards.html" as cards %}
+{% import "macros/macros.html" as macros %}
+{% import "macros/menu.html" as menu %}
+{% import "macros/tags.html" as tags %}
 
 <!Doctype html>
 <html>
@@ -11,39 +12,16 @@
 {% elif config.extra.menu_data %}
     {% set menuData = config.extra.menu_data %}
 {% else %}
-    {% set menuData = load_data(path="data/menu.json") %}
+    {% set menuData = false %}
 {% endif %}
 
 <head>
-    <title>
-        {%- block title -%}
-            {%- if page and page.title -%}
-                {{ page.title }}
-            {%- elif section and section.title -%}
-                {{ section.title }}
-            {%- else -%}
-                {{config.title}}
-            {%- endif -%}
-        {%- endblock title -%}
-    </title>
+    <title>{%- block title -%}{{config.title}}{%- endblock title -%}</title>
     <link rel="stylesheet" type="text/css" href="/style/main.css">
     <link rel="stylesheet" type="text/css" href="/style/arsmateria-zola-extra.css">
     <meta charset="UTF-8">
-    <meta name="description" content="
-        {%- block description -%}
-            {%- if page and page.description -%}
-                {{ page.description }}
-            {%- elif section and section.description -%}
-                {{ section.description }}
-            {%- else -%}
-                {{config.description}}
-            {%- endif -%}
-        {%- endblock description -%}
-    ">
-    <meta name="author" content="
-        {%- block author -%}
-            {{config.author}}
-        {%- endblock author -%}">
+    <meta name="description" content="{%- block description -%}{{config.description}}{%- endblock description -%}">
+    <meta name="author" content="{%- block author -%}{{config.author}}{%- endblock author -%}">
     <meta name="generator" content="Zola">
     <meta name="keywords" content="{% block keywords %}{{config.extra.keywords | join(sep=",")}}{% endblock keywords %}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -90,7 +68,8 @@
             <header class="fixed bg-darken bg-blur">
                 <div class="container">
                     {% block headerMenu %}
-                        <ul class="flex menu-bar no-bg-color flex-layout responsive bp-0 wrap">
+                        
+                        <ul class="menu-bar no-bg-color flex-layout responsive bp-0 wrap">
                             <li class="flex menu-item title {% if page and page.path == '/' %}selected{% endif %}{% if section and section.path == '/' %}selected{% endif %}">
                                 <a href="/" class="fg-color">
                                     {% block headerTitle %}
@@ -98,6 +77,7 @@
                                     {% endblock headerTitle %}
                                 </a>
                             </li>
+                            {% if menuData and menuData.topMenu %}
                             {% for entry in menuData.topMenu %}
                                 <!-- @TODO Re-add support for dropdown menus -->
                                 <li class="menu-item {% if entry.children %}dropdown{% endif %} {% if entry.url != '/' and page and page.path is starting_with(entry.url) %}selected{% endif %} {% if entry.url != "/" and section and section.path is starting_with(entry.url) %}selected{% endif %}">
@@ -111,6 +91,7 @@
                                     {% endif %}
                                 </li>
                             {% endfor %}
+                            {% endif %}
                         </ul>
                     {% endblock headerMenu %}
                 </div>
@@ -148,6 +129,7 @@
         <div class="height-20"></div>
         {% endblock footerFront %}
         <footer class="footer box-shadow">
+            {% if menuData and menuData.footerMenu %}
             <div class="footer-top">
                 <div class="container flex-layout responsive bp-0 wrap">
                     {% for entry in menuData.footerMenu %}
@@ -162,6 +144,7 @@
                     {% endfor %}
                 </div>
             </div>
+            {% endif %}
             <div class="footer-bottom">
                 <div class="flex-layout horizontal wrap">
                     <div class="flex"></div>

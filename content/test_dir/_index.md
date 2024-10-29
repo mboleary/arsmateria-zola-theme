@@ -2,11 +2,6 @@
 title = "Section"
 description = "Description"
 
-date=2023-06-09
-
-[taxonomies]
-tags=["code", "js", "html", "audio", "music", "engine", "library", "opensource"]
-
 [extra]
 titlecard = "bg-gradient-a3-a4"
 titlecard_text="fg-dark-color text-shadow-dark"

@@ -4,10 +4,6 @@ base_url = "http://example.com"
 # Whether to automatically compile all Sass files in the sass directory
 compile_sass = false
 
-# Whether to do syntax highlighting
-# Theme can be customised by setting the `highlight_theme` variable to a theme supported by Zola
-highlight_code = false
-
 # Whether to build a search index to be used later on by a JavaScript library
 build_search_index = false
 
@@ -15,17 +11,22 @@ build_search_index = false
 taxonomies = [{name = "tags", rss = true}]
 
 title = "ArsMateria Zola Theme"
+author = "Author Name"
+description = "Zola theme Description"
+
+[markdown]
+# Whether to do syntax highlighting
+# Theme can be customised by setting the `highlight_theme` variable to a theme supported by Zola
+highlight_code = false
 
 [extra]
 # Global settings for the theme and SEO
 subtitle = "Subtitle"
-author = "Author Name"
 copyright_year = "20XX"
-default_description = "A Zola Theme using arsMateria styling"
 keywords = ["keywords", "go", "here"]
 
 # Menu config
-menu_data_path="data/menu.json" # Load menu data from a path
+# menu_data_path="data/menu.json" # Load menu data from a path
 [extra.menu_data]
 
 # Tags config

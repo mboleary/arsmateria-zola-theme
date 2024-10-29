@@ -1,5 +1,9 @@
 {% extends "index.html" %}
 
+{% block title %}{{ section.title }}{% endblock title %}
+{% block description %}{{ section.description }}{% endblock %}
+{% if page.authors %}{% block author %}{{ page.authors | first }}{% endblock author %}{% endif %}
+
 {% block content %}
 
 {% if section.extra %}
@@ -34,60 +38,42 @@
 </div>
 {% endif %}
 <div id="section-pages"></div>
+{% block sectionPages %}
 {% if section.pages %}
     {% for page in section.pages %}
-        {% if not section.extra.type or section.extra.type == "article" %}
-            <div class="container">
-                <article class="article-brief content-card">
-                    <header class="hbar">
-                        <h1 class="title"><a href="{{page.path}}"> {{page.title}} </a></h1>
-                        <div>
-                            <span class="info">
-                                {% if page.date %}{{page.date}} | {% endif %}
-                            </span>
-                            {% if page.taxonomies.tags %}
-                                {% for tag in page.taxonomies.tags %}
-                                    {{tags::tag(tag=tag)}}
-                                {% endfor %}
-                            {% endif %}
-                        </div>
-                    </header>
-                    {% if page.summary %}
-                        <div>
-                            {{page.summary | safe}}
-                        </div>
-                        <div class="height-10"></div>
-                        <a href="{{page.path}}#continue-reading"><div class="continue"> Continue Reading ... </div></a>
-                    {% elif page.description %}
-                        <div>
-                            {{page.description}}
-                        </div>
-                        <div class="height-10"></div>
-                        <a href="{{page.path}}#continue-reading"><div class="continue"> Continue Reading ... </div></a>
-                    {% endif %}
-                </article>
-            </div>
-        {% elif section.extra.type == "flashcard" %}
-            {% set titlecardStyle = false %}
-            {% set titlecardTextStyle = false %}
-            {% set titlecardImg = false %}
-            {% set titlecardBannerTags = false %}
-            {% if page.extra.titlecard %}
-                {% set titlecardStyle = page.extra.titlecard %}
-            {% endif %}
-            {% if page.extra.titlecard_text %}
-                {% set titlecardTextStyle = page.extra.titlecard_text %}
-            {% endif %}
-            {% if page.extra.titlecard_image %}
-                {% set titlecardImg = page.extra.titlecard_image %}
-            {% endif %}
-            {% if page.taxonomies.tags %}
-                {% set titlecardBannerTags = page.taxonomies.tags %}
-            {% endif %}
-            {{ macros::flashcard(title=page.title, subtitle=page.description, style=titlecardStyle, textStyle=titlecardTextStyle, img=titlecardImg, readMore=page.path, left=page.date, tags=titlecardBannerTags) }}
-        {% endif %}
+        <div class="container">
+            <article class="article-brief content-card">
+                <header class="hbar">
+                    <h1 class="title"><a href="{{page.path}}"> {{page.title}} </a></h1>
+                    <div>
+                        <span class="info">
+                            {% if page.date %}{{page.date}} | {% endif %}
+                        </span>
+                        {% if page.taxonomies.tags %}
+                            {% for tag in page.taxonomies.tags %}
+                                {{tags::tag(tag=tag)}}
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </header>
+                {% if page.summary %}
+                    <div>
+                        {{page.summary | safe}}
+                    </div>
+                    <div class="height-10"></div>
+                    <a href="{{page.path}}#continue-reading"><div class="continue"> Continue Reading ... </div></a>
+                {% elif page.description %}
+                    <div>
+                        {{page.description}}
+                    </div>
+                    <div class="height-10"></div>
+                    <a href="{{page.path}}#continue-reading"><div class="continue"> Continue Reading ... </div></a>
+                {% endif %}
+            </article>
+        </div>
     {% endfor %}
-    
 {% endif %}
+
+{% endblock sectionPages %}
 
 {% endblock content %}
