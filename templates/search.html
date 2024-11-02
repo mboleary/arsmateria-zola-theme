@@ -5,69 +5,40 @@
 {% block description %}Search the contents of this website{% endblock %}
 
 {% block head %}
-<script src="./elasticlunr.min.js"></script>
-<script src="./search_index.en.js"></script>
+<script src="/script/template.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.js"></script>
 
 <script>
 
     const OPTIONS = {
-        bool: "AND",
-        fields: {
-            title: {
-                boost: 2
-            },
-            body: {
-                boost: 1
-            }
-        }
+        fields: ["title", "description", "body"]
     };
 
-    function init() {
-        const index = elasticlunr.Index.load(window.searchIndex);
+    async function init() {
+        // const index = elasticlunr.Index.load(window.searchIndex);
+        const indexData = await fetch("/search_index.en.json").then(res => res.json());
+        console.log(indexData);
+        const index = new Fuse(indexData, OPTIONS);
 
         const $form = document.querySelector("#search-form");
         const $searchResults = document.querySelector("#search-results");
         const $template = document.querySelector("#result-item");
 
         const handleSearch = (searchText) => {
-            const results = index.search(String(searchText).trim());
+            const searchStr = String(searchText).trim();
+            const results = index.search(searchStr);
 
-            console.log("Results:", results);
+            console.log("Results:", results, searchStr);
             
             // Clear out old results (if any)
-
-            while ($searchResults.hasChildNodes()) {
-                $searchResults.removeChild($searchResults.firstChild);
-            }
+            clearChildren($searchResults);
 
             // Render new results
-
-            const frag = document.createDocumentFragment();
-
-            for (const item of results) {
-                const temp = $template.content.cloneNode(true);
-
-                const fields = temp.querySelectorAll("[field]");
-
-                for (const field of fields) {
-                    const data = {
-                        title: item.doc.title,
-                        path: item.ref,
-                        summary: item.doc.body
-                    }
-                    const f = field.getAttribute("field");
-                    const ft = field.getAttribute("field-target");
-                    if (f && data[f]) {
-                        if (ft) {
-                            field.setAttribute(ft, data[f]);
-                        } else {
-                            field.textContent = data[f];
-                        }
-                    }
-                }
-
-                frag.appendChild(temp);
-            }
+            const frag = renderItemsIntoTemplate($template, results.map(result => ({
+                title: result.doc.title,
+                path: result.ref,
+                summary: result.doc.body
+            })))
 
             $searchResults.appendChild(frag);
         }

@@ -1,0 +1,42 @@
+{% extends "index.html" %}
+
+{% block title %}Site Graph{% endblock %}
+
+{% block description %}Explore the contents of this website{% endblock %}
+
+{% block head %}
+<script src="//unpkg.com/3d-force-graph"></script>
+{% endblock head %}
+
+{% block body %}
+<div id="3d-graph"></div>
+
+<script>
+
+  async function main() {
+    // Load search index data
+    const indexData = await fetch("/search_index.en.json").then(res => res.json());
+
+    const gData = {
+      nodes: indexData.map((elem, idx) => ({...elem, id: idx})),
+      links: []
+      // links: [...Array(N).keys()]
+      //   .filter(id => id)
+      //   .map(id => ({
+      //     source: id,
+      //     target: Math.round(Math.random() * (id-1))
+      //   }))
+    };
+
+    const Graph = ForceGraph3D()
+      (document.getElementById('3d-graph'))
+        .graphData(gData)
+        .nodeLabel("title")
+        .onNodeClick((node, evt) => {
+          console.log(node);
+          window.location.assign(node.path);
+        });
+  }
+  main();
+</script>
+{% endblock body %}

@@ -5,7 +5,7 @@ base_url = "http://example.com"
 compile_sass = false
 
 # Whether to build a search index to be used later on by a JavaScript library
-build_search_index = false
+build_search_index = true
 
 # Taxonomies
 taxonomies = [{name = "tags", rss = true}]
@@ -13,6 +13,13 @@ taxonomies = [{name = "tags", rss = true}]
 title = "ArsMateria Zola Theme"
 author = "Author Name"
 description = "Zola theme Description"
+
+[search]
+include_title = true
+include_description = true
+include_date = true
+include_path = true
+index_format = "fuse_json"
 
 [markdown]
 # Whether to do syntax highlighting
